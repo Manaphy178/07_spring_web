@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+  </head>
+  <body>
+    Bienvenido a mi tienda de Sombreros
+
+    <div>
+      <a href="admin/">Acceder a la administracion de la tienda</a>
+    </div>
+
+    <div style="text-align: center">
+      Bienvenido a la parte publica de la tienda de libros
+    </div>
+    <div id="contenedor">cargando...</div>
+    <script src="jquery.js"></script>
+    <script type="text/javascript">
+      // Esto es javascript
+      // Vamos a pedir informacion a un servicio en el servidor, para recibir
+      // un listado de productos
+
+      // mandar informacion o recibirla desde javascript es una tecnica que se llama AJAX
+      // para hacer AJAX con js vamos a usar la libreria mas conocida de js: jQuery
+
+      // jquery se usa a traves de la variable $ no confundir con cuando usamos $ en jsp
+      $("#contenedor").html("jquery importado correctamente");
+      // Vamos a comunicarnos con el servicio de producto:
+      // cuando se haga click en el boton
+
+      $.ajax("ServicioProductos").done(function (respuesta) {
+        // vamos a procesar la respuesta con el json de los libros
+        // transformamos el json recibido a array de javascript:
+        let sombreros = JSON.parse(respuesta);
+        console.log(respuesta);
+        console.log(sombreros);
+        let texto_html = "";
+        for (s in sombreros) {
+          texto_html += "<div>";
+          texto_html +=
+            sombreros[s].nombre +
+            " " +
+            sombreros[s].desc +
+            " " +
+            sombreros[s].precio +
+            "&euro;";
+          texto_html += "</div>";
+        } //end for
+        $("#contenedor").html(texto_html);
+      }); // fin ajax
+    </script>
+  </body>
+</html>
