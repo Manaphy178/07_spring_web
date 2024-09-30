@@ -13,5 +13,9 @@ public interface SombrerosDAO {
 	void borrarSombrero(int id);
 
 	void editarSombrero(Sombrero s);
+
+	Sombrero obtenerSombreroPorId(long id);
+
+	void actualizarLibro(Sombrero s);
 	
 }

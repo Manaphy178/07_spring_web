@@ -11,11 +11,23 @@
       <a href="admin/">Acceder a la administracion de la tienda</a>
     </div>
 
-    <div style="text-align: center">
+    <div style="text-align: center; margin: 10px">
       Bienvenido a la parte publica de la tienda de libros
     </div>
-    <div id="contenedor">cargando...</div>
+
+    <div style="margin: 10px">
+      <a href="#" id="menu-inicio">Inicio</a>
+      <a href="#" id="menu-identificarme">Identificarme</a>
+      <a href="#" id="menu-registrarme">Registrarme</a>
+      <a href="#" id="menu-carrito">Carrito</a>
+      <a href="#" id="menu-mis-pedidos">Mis pedidos</a>
+      <a href="#" id="menu-mis-datos">Mis datos personales</a>
+    </div>
+
+    <div id="contenedor"></div>
+    <script src="mustache.js"></script>
     <script src="jquery.js"></script>
+
     <script type="text/javascript">
       // Esto es javascript
       // Vamos a pedir informacion a un servicio en el servidor, para recibir
@@ -29,26 +41,54 @@
       // Vamos a comunicarnos con el servicio de producto:
       // cuando se haga click en el boton
 
-      $.ajax("ServicioProductos").done(function (respuesta) {
-        // vamos a procesar la respuesta con el json de los libros
-        // transformamos el json recibido a array de javascript:
-        let sombreros = JSON.parse(respuesta);
-        console.log(respuesta);
-        console.log(sombreros);
-        let texto_html = "";
-        for (s in sombreros) {
-          texto_html += "<div>";
-          texto_html +=
-            sombreros[s].nombre +
-            " " +
-            sombreros[s].desc +
-            " " +
-            sombreros[s].precio +
-            "&euro;";
-          texto_html += "</div>";
-        } //end for
-        $("#contenedor").html(texto_html);
-      }); // fin ajax
+      //Operacion Ajax
+      function obtenerProductos() {
+        $.ajax("ServicioProductos").done(function (respuesta) {
+          // vamos a procesar la respuesta con el json de los libros
+          // transformamos el json recibido a array de javascript:
+          let sombreros = JSON.parse(respuesta);
+          console.log(respuesta);
+          console.log(sombreros);
+          let texto_html = "";
+          for (s in sombreros) {
+            texto_html += "<div>";
+            texto_html +=
+              sombreros[s].nombre +
+              " " +
+              sombreros[s].desc +
+              " " +
+              sombreros[s].precio +
+              "&euro;";
+            texto_html += "<a href='#'>Ver detalles</a>";
+            texto_html += "</div>";
+          } //end for
+          $("#contenedor").html(texto_html);
+        }); // fin ajax
+      } //End obtener productos
+      //fin operaciones con ajax
+
+      //Operaciones del menu:
+      $("#menu-inicio").click(obtenerProductos);
+      $("#menu-registrarme").click(mostrarFormularioRegistroUsuario);
+      //fin operaciones del menu
+
+      // Operaciones con plantillas
+      function mostrarFormularioRegistroUsuario() {
+        $.get("plantillas/formulario-registro-usuario.html").done(function (
+          res
+        ) {
+          $("#contenedor").html(res);
+        });
+
+        // Lo que queremos
+        // let texto_html = "";
+        /*Lo siguiente no queremos hacerlo, porque formar un formulario
+        o cualquier cosa con html dentro de js es muy incomodo
+        y da pie a errores*/
+        // texto_html += "";
+        // $("#contenedor").html(texto_html);
+      }
+      // fin operaciones con plantillas
     </script>
   </body>
 </html>

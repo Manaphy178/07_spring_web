@@ -20,6 +20,7 @@ pageEncoding="UTF-8"%>
 			Precio: ${elemento.precio } euros <br>
 			ID: ${elemento.id} <br>
 			<a href="ServletBorrarSombrero?id=${elemento.id }" onclick="return confirm('¿seguro?')">Borrar</a>
+			<a href="ServletEditarSombrero?id=${elemento.id }">Editar</a>
 			<hr>
 		</div>
 	</c:forEach>

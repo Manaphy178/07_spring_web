@@ -3,7 +3,12 @@
     </div>
 
     <div>
-      <a href="#">gestionar usuarios (por hacer...)</a>
+      <a href="#">gestionar usuarios</a>
       <a href="ServletListarSombrero">gestionar libros</a>
-      <a href="ServletLogOut">CERRAR SESION (salir de administracion)</a>
+		<a href="#">gestionar categorias</a>
+		<a href="#">gestionar pedidos</a>
+      
+      
+      
+      <a href="ServletLogOut">CERRAR SESION</a>
     </div>

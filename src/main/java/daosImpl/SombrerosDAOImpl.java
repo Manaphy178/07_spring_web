@@ -61,4 +61,18 @@ public class SombrerosDAOImpl implements SombrerosDAO {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public Sombrero obtenerSombreroPorId(long id) {
+		Sombrero s = this.jdbcTemplate.queryForObject(ConstantesSQL.SQL_OBTENER_SOMBRERO_POR_ID, new SombrerosMapper(),
+				id);
+		return s;
+
+	}
+
+	@Override
+	public void actualizarLibro(Sombrero s) {
+		this.jdbcTemplate.update(ConstantesSQL.SQL_ACTUALIZAR_SOMBRERO, s.getNombre(), s.getDesc(), s.getPrecio(),
+				s.getId());
+	}
 }
