@@ -1,0 +1,13 @@
+<!-- plantilla a usar por el js de index.html para
+mostrar un listado de productos usando mustache -->
+<div style="margin: 10px">
+  <div>Listado de sombreros de la tienda</div>
+
+  {{#.}}
+  <div style="margin: 10px">
+    Nombre:{{nombre}} <br />
+    Descripcion:{{desc}} <br />
+    Precio:{{precio}}
+  </div>
+  {{/.}}
+</div>

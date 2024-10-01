@@ -9,7 +9,8 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName"
 			value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost/bd_ejemplo_tienda" />
+		<property name="url"
+			value="jdbc:mysql://localhost/bd_ejemplo_tienda" />
 		<property name="username" value="root" />
 		<property name="password" value="" />
 	</bean>
@@ -17,6 +18,10 @@
 	<!-- DAOS -->
 	<bean id="sombrerosDAO" class="daosImpl.SombrerosDAOImpl">
 		<property name="ds" ref="dataSource" />
+	</bean>
+
+	<bean id="usuariosDAO" class="daosImpl.UsuariosDAOImpl">
+		<property name="ds" ref="dataSource"/>
 	</bean>
 
 </beans>

@@ -37,10 +37,12 @@
       // para hacer AJAX con js vamos a usar la libreria mas conocida de js: jQuery
 
       // jquery se usa a traves de la variable $ no confundir con cuando usamos $ en jsp
-      $("#contenedor").html("jquery importado correctamente");
+
       // Vamos a comunicarnos con el servicio de producto:
       // cuando se haga click en el boton
 
+      
+      
       //Operacion Ajax
       function obtenerProductos() {
         $.ajax("ServicioProductos").done(function (respuesta) {
@@ -50,44 +52,68 @@
           console.log(respuesta);
           console.log(sombreros);
           let texto_html = "";
-          for (s in sombreros) {
-            texto_html += "<div>";
-            texto_html +=
-              sombreros[s].nombre +
-              " " +
-              sombreros[s].desc +
-              " " +
-              sombreros[s].precio +
-              "&euro;";
-            texto_html += "<a href='#'>Ver detalles</a>";
-            texto_html += "</div>";
-          } //end for
+          texto_html = Mustache.render(html_listado_productos, sombreros);
           $("#contenedor").html(texto_html);
         }); // fin ajax
       } //End obtener productos
       //fin operaciones con ajax
 
+      function enviarInfoUsuarioAlServidor(){
+    	  let nombre=$("#nombre").val()
+    	  let email=$("#email").val()
+    	  let pass=$("pass").val()
+    	  //falta validar los datos antes de mandarlos a ServicioUsuarios
+    	  $.post("ServicioUsuarios",
+    			  {
+    		  nombre : nombre,
+    		  email : email,
+    		  pass : pass
+    			  }
+    	  ).done(function(res){
+    		  
+    	  })
+    	  
+      }//end enviarInfoUsuarioAlServidor
+      
       //Operaciones del menu:
       $("#menu-inicio").click(obtenerProductos);
       $("#menu-registrarme").click(mostrarFormularioRegistroUsuario);
       //fin operaciones del menu
 
+      
+      
       // Operaciones con plantillas
       function mostrarFormularioRegistroUsuario() {
-        $.get("plantillas/formulario-registro-usuario.html").done(function (
-          res
-        ) {
-          $("#contenedor").html(res);
-        });
+        $("#contenedor").html(html_formulario_registro_usuario);
+        $("#boton_registro_usuario").click(enviarInfoUsuarioAlServidor)
+      } //end mostrar formulario resgistro usuario
 
-        // Lo que queremos
-        // let texto_html = "";
-        /*Lo siguiente no queremos hacerlo, porque formar un formulario
+      
+      
+      /* Vamos a descargar de primeras todas las plantillas
+        para no ir pidiendolas una a una segun lo que quiera
+        el usuario*/
+      // Estas variables tienen los bloques de html
+      // Que iremos mostrando al usuario segun donde haga click
+      let html_formulario_registro_usuario = "";
+      let html_listado_productos = "";
+
+      // Vamos a descargar todas las plantillas
+      $.get("plantillas/formulario-registro-usuario.html").done(function (res) {
+        html_formulario_registro_usuario = res;
+      });
+      $.get("plantillas/listado-productos.html").done(function (res) {
+        html_listado_productos = res;
+      });
+
+      // Lo que queremos
+      // let texto_html = "";
+      /*Lo siguiente no queremos hacerlo, porque formar un formulario
         o cualquier cosa con html dentro de js es muy incomodo
         y da pie a errores*/
-        // texto_html += "";
-        // $("#contenedor").html(texto_html);
-      }
+      // texto_html += "";
+      // $("#contenedor").html(texto_html);
+
       // fin operaciones con plantillas
     </script>
   </body>
